@@ -1,9 +1,9 @@
 import { useState } from "react";
 import CommonForm from "../common/form";
-import { DialogContent } from "../ui/dialog";
-import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
-import { Badge } from "../ui/badge";
+import { DialogContent } from "../ui/Dialog";
+import { Label } from "../ui/Label";
+import { Separator } from "../ui/Seperator";
+import { Badge } from "../ui/Badge";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersForAdmin,

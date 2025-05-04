@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/Sheet";
 
 const adminSidebarMenuItems = [
   {
@@ -21,12 +21,12 @@ const adminSidebarMenuItems = [
     path: "/admin/products",
     icon: <ShoppingBasket />,
   },
-  {
-    id: "orders",
-    label: "Orders",
-    path: "/admin/orders",
-    icon: <BadgeCheck />,
-  },
+  // {
+  //   id: "orders",
+  //   label: "Orders",
+  //   path: "/admin/orders",
+  //   icon: <BadgeCheck />,
+  // },
 ];
 
 function MenuItems({ setOpen }) {

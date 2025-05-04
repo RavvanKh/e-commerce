@@ -1,14 +1,14 @@
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Input } from "../ui/Input";
+import { Label } from "../ui/Label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
+} from "../ui/Select";
+import { Textarea } from "../ui/TextArea";
+import { Button } from "../ui/Button";
 
 function CommonForm({
   formControls,

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/Button";
+import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
 import { useNavigate } from "react-router-dom";
 
 function PaymentSuccessPage() {

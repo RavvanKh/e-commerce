@@ -1,7 +1,7 @@
-import { Card, CardContent, CardFooter } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card, CardContent, CardFooter } from "../ui/Card";
+import { Button } from "../ui/Button";
 import { brandOptionsMap, categoryOptionsMap } from "@/config";
-import { Badge } from "../ui/badge";
+import { Badge } from "../ui/Badge";
 
 function ShoppingProductTile({
   product,

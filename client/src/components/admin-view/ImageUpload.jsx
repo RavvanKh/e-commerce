@@ -1,10 +1,10 @@
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Input } from "../ui/Input";
+import { Label } from "../ui/Label";
 import { useEffect, useRef } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 import axios from "axios";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "../ui/Skeleton";
 
 function ProductImageUpload({
   imageFile,
