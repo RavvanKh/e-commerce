@@ -114,7 +114,6 @@ function ShoppingHome() {
     );
   }, [dispatch]);
 
-  console.log(productList, "productList");
 
   useEffect(() => {
     dispatch(getFeatureImages());
@@ -215,6 +214,7 @@ function ShoppingHome() {
                     handleGetProductDetails={handleGetProductDetails}
                     product={productItem}
                     handleAddtoCart={handleAddtoCart}
+                    isGuest = {user?.role === 'guest'}
                   />
                 ))
               : null}

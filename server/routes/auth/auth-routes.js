@@ -4,10 +4,12 @@ const {
   loginUser,
   logoutUser,
   authMiddleware,
+  verifyAccount
 } = require("../../controllers/auth/auth-controller");
 
 const router = express.Router();
 
+router.get('/verify-account',verifyAccount)
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);

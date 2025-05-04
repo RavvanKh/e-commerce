@@ -7,6 +7,35 @@ const initialState = {
   user: null,
 };
 
+export const continueAsGuest = createAsyncThunk(
+  "auth/continueAsGuest",
+  async (_, { rejectWithValue }) => {
+    try {
+      const guestUser = {
+        id: `guest-${Date.now()}`,
+        email: "",
+        userName: "Guest User",
+        isVerified: true,
+        role: "guest",
+        isGuest: true,
+      };
+
+      // localStorage.setItem('guestUser', JSON.stringify(guestUser));
+
+      return {
+        success: true,
+        user: guestUser,
+        message: "Guest session started",
+      };
+    } catch (error) {
+      return rejectWithValue({
+        message: "Failed to create guest session",
+        error: error.message,
+      });
+    }
+  }
+);
+
 export const registerUser = createAsyncThunk(
   "/auth/register",
 
@@ -19,6 +48,18 @@ export const registerUser = createAsyncThunk(
       }
     );
 
+    return response.data;
+  }
+);
+
+export const verifyAccount = createAsyncThunk(
+  "/auth/verify-account",
+  async (token) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/auth/verify-account?token=${token}`,
+      token,
+      { withCredentials: true }
+    );
     return response.data;
   }
 );
@@ -99,8 +140,6 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        console.log(action);
-
         state.isLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
@@ -122,6 +161,23 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(verifyAccount.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(verifyAccount.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = action.payload.success;
+        state.user = action.payload.success ? action.payload.user : null;
+      })
+      .addCase(verifyAccount.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = false;
+        state.user = null;
+      })
+      .addCase(continueAsGuest.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isAuthenticated = true
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.isLoading = false;

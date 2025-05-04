@@ -20,6 +20,15 @@ export const registerFormControls = [
     componentType: "input",
     type: "password",
   },
+  {
+    name: "role",
+    label: "Select role",
+    componentType: "select",
+    options: [
+      { label: "Seller", id: "seller" },
+      { label: "User", id: "user" },
+    ],
+  },
 ];
 
 export const loginFormControls = [

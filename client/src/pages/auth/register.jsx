@@ -1,4 +1,4 @@
-import CommonForm from "@/components/common/form";
+import CommonForm from "@/components/common/Form";
 import { useToast } from "@/components/ui/use-toast";
 import { registerFormControls } from "@/config";
 import { registerUser } from "@/store/auth-slice";
@@ -10,6 +10,7 @@ const initialState = {
   userName: "",
   email: "",
   password: "",
+  role:'user'
 };
 
 function AuthRegister() {
@@ -35,7 +36,6 @@ function AuthRegister() {
     });
   }
 
-  console.log(formData);
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">

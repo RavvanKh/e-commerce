@@ -7,6 +7,7 @@ function ShoppingProductTile({
   product,
   handleGetProductDetails,
   handleAddtoCart,
+  isGuest = false
 }) {
   return (
     <Card className="w-full max-w-sm mx-auto">
@@ -63,7 +64,7 @@ function ShoppingProductTile({
             Out Of Stock
           </Button>
         ) : (
-          <Button
+          !isGuest && <Button
             onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
             className="w-full"
           >

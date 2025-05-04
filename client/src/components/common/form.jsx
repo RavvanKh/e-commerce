@@ -6,8 +6,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/Select";
-import { Textarea } from "../ui/TextArea";
+} from "../ui/select";
+import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/Button";
 
 function CommonForm({

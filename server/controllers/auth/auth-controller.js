@@ -1,8 +1,10 @@
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const User = require("../../models/User");
 
-//register
+const User = require("../../models/User");
+const { sendVerificationEmail } = require("../../helpers/mailer");
+
 const registerUser = async (req, res) => {
   const { userName, email, password } = req.body;
 
@@ -15,19 +17,32 @@ const registerUser = async (req, res) => {
       });
 
     const hashPassword = await bcrypt.hash(password, 12);
+    const verificationToken = crypto.randomBytes(20).toString("hex");
+    const verificationTokenExpires = Date.now() + 3600000;
+
     const newUser = new User({
       userName,
       email,
       password: hashPassword,
+      isVerified: false,
+      verificationToken,
+      verificationTokenExpires,
     });
 
     await newUser.save();
+
+    const emailSent = await sendVerificationEmail(email, verificationToken);
+
+    if (!emailSent) {
+      await User.deleteOne({ email });
+      throw new Error("Mail gönderilemedi");
+    }
+
     res.status(200).json({
       success: true,
-      message: "Registration successful",
+      message: "Please verify your account using gmail",
     });
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       success: false,
       message: "Some error occured",
@@ -35,7 +50,6 @@ const registerUser = async (req, res) => {
   }
 };
 
-//login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -87,8 +101,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-//logout
-
 const logoutUser = (req, res) => {
   res.clearCookie("token").json({
     success: true,
@@ -96,7 +108,6 @@ const logoutUser = (req, res) => {
   });
 };
 
-//auth middleware
 const authMiddleware = async (req, res, next) => {
   const token = req.cookies.token;
   if (!token)
@@ -117,4 +128,48 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser, logoutUser, authMiddleware };
+const verifyAccount = async (req, res) => {
+  const { token } = req.query;
+
+  try {
+    const user = await User.findOne({
+      verificationToken: token,
+      verificationTokenExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "Invalid or expired verification token",
+      });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    user.verificationTokenExpires = undefined;
+    await user.save();
+
+    res.json({
+      success: true,
+      user:{ email: user.email,
+        role: user.role,
+        id: user._id,
+        userName: user.userName,},
+      message: "Email verified successfully",
+    });
+  } catch (error) {
+    console.error("Verification error:", error);
+    res.json({
+      success: false,
+      message: "Server error during verification",
+    });
+  }
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  logoutUser,
+  authMiddleware,
+  verifyAccount,
+};

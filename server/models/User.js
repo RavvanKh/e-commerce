@@ -6,6 +6,15 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  isVerified: {
+    type: Boolean,
+  },
+  verificationToken: {
+    type: String,
+  },
+  verificationTokenExpires: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
@@ -16,6 +25,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   role: {
+    enum: ["guest", "user", "seller", "admin"],
     type: String,
     default: "user",
   },
