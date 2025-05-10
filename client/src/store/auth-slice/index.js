@@ -124,7 +124,7 @@ export const checkAuth = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "https://e-commerce-sandy-psi-61.vercel.app/api/auth/check-auth",
+      "https://e-commerce-tau-gold.vercel.app/api/auth/check-auth",
       {
         withCredentials: true,
         headers: {
