@@ -4,12 +4,16 @@ const {
   loginUser,
   logoutUser,
   authMiddleware,
-  verifyAccount
+  verifyAccount,
+  forgotPassword,
+  resetPassword
 } = require("../../controllers/auth/auth-controller");
 
 const router = express.Router();
 
 router.get('/verify-account',verifyAccount)
+router.get('/forgot-password',forgotPassword)
+router.post('/reset-password',resetPassword)
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);

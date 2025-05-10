@@ -31,6 +31,32 @@ export const registerFormControls = [
   },
 ];
 
+export const forgotPasswordControls = [
+  {
+    name: "email",
+    label: "Email",
+    placeholder: "Enter your email",
+    componentType: "input",
+    type: "email",
+  },
+];
+
+export const resetPasswordControls = [
+  {
+    name: "password",
+    label: "Password",
+    placeholder: "Enter your password",
+    componentType: "input",
+    type: "password",
+  },
+  {
+    name: "repeatPassword",
+    label: "Repeat password",
+    placeholder: "Enter your password again",
+    componentType: "input",
+    type: "password",
+  },
+];
 export const loginFormControls = [
   {
     name: "email",

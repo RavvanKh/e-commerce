@@ -23,6 +23,8 @@ import { Skeleton } from "@/components/ui/Skeleton";
 // import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/Search";
 import VerifyAccount from "./pages/auth/VerifyAccount";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -35,7 +37,6 @@ function App() {
   }, [dispatch]);
 
   if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
-
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -60,6 +61,8 @@ function App() {
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
           <Route path="verify-account" element={<VerifyAccount />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
         </Route>
         <Route
           path="/admin"

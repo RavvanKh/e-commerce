@@ -10,6 +10,9 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/Button";
 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+
 function CommonForm({
   formControls,
   formData,
@@ -25,19 +28,40 @@ function CommonForm({
     switch (getControlItem.componentType) {
       case "input":
         element = (
-          <Input
-            name={getControlItem.name}
-            placeholder={getControlItem.placeholder}
-            id={getControlItem.name}
-            type={getControlItem.type}
-            value={value}
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                [getControlItem.name]: event.target.value,
-              })
-            }
-          />
+          <div className="relative">
+            <Input
+              name={getControlItem.name}
+              placeholder={getControlItem.placeholder}
+              id={getControlItem.name}
+              type={
+                getControlItem.type === "password"
+                  ? showPassword[getControlItem.name]
+                    ? "text"
+                    : "password"
+                  : getControlItem.type
+              }
+              value={value}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  [getControlItem.name]: event.target.value,
+                })
+              }
+            />
+            {getControlItem.type === "password" && (
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                onClick={() => togglePasswordVisibility(getControlItem.name)}
+              >
+                {showPassword[getControlItem.name] ? (
+                  <FaEyeSlash size={20} />
+                ) : (
+                  <FaEye size={20} />
+                )}
+              </button>
+            )}
+          </div>
         );
 
         break;
@@ -107,6 +131,15 @@ function CommonForm({
 
     return element;
   }
+
+  const [showPassword, setShowPassword] = useState({});
+
+  const togglePasswordVisibility = (fieldName) => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [fieldName]: !prev[fieldName],
+    }));
+  };
 
   return (
     <form onSubmit={onSubmit}>

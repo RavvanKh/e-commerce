@@ -80,6 +80,29 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  "/auth/reset-password",
+  async (formData) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/reset-password",
+      formData,
+      { withCredentials: true }
+    );
+    return response.data;
+  }
+);
+
+export const sendForgotPasswordMail = createAsyncThunk(
+  "/auth/forgot-password",
+  async (formData) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/auth/forgot-password?email=${formData?.email}`,
+      { withCredentials: true }
+    );
+    return response.data;
+  }
+);
+
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
 
@@ -177,7 +200,25 @@ const authSlice = createSlice({
       })
       .addCase(continueAsGuest.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.isAuthenticated = true
+        state.isAuthenticated = true;
+      })
+      .addCase(sendForgotPasswordMail.pending, (state, action) => {
+        state.isLoading = true
+      })
+      .addCase(sendForgotPasswordMail.fulfilled, (state, action) => {
+        state.isLoading = false
+      })
+      .addCase(sendForgotPasswordMail.rejected, (state, action) => {
+        state.isLoading = false
+      })
+      .addCase(resetPassword.pending,(state,action) =>{
+        state.isLoading = true
+      })
+      .addCase(resetPassword.rejected,(state,action) =>{
+        state.isLoading = false
+      })
+      .addCase(resetPassword.fulfilled,(state,action) =>{
+        state.isLoading = false
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.isLoading = false;

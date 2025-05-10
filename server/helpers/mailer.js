@@ -7,13 +7,10 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL_USERNAME,
     pass: process.env.EMAIL_PASSWORD,
   },
-  tls:{
-    rejectUnauthorized:false
-
-  }
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
-
-console.log(process.env.EMAIL_USERNAME,)
 
 const sendVerificationEmail = async (email, verificationToken) => {
   try {
@@ -51,8 +48,37 @@ const sendVerificationEmail = async (email, verificationToken) => {
 };
 
 const sendPasswordResetEmail = async (email, resetToken) => {
-};
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
 
+  const resetLink = `http://localhost:5173/auth/reset-password?token=${resetToken}`;
+
+  await transporter.sendMail({
+    from: '"Your App" <no-reply@yourapp.com>',
+    to: email,
+    subject: "Reset your password",
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 8px;">
+        <h2 style="color: #333;">Reset your password</h2>
+        <p>Hello,</p>
+        <p>We received a request to reset your password. Click the button below to set a new password. This link will expire in 1 hour.</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetLink}" 
+             style="background-color: #007bff; color: white; padding: 12px 20px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: bold;">
+            Reset Password
+          </a>
+        </div>
+        <p>If you didn’t request this, you can safely ignore this email.</p>
+        <p style="color: #888;">— Your App Team</p>
+      </div>
+    `,
+  });
+};
 module.exports = {
   sendVerificationEmail,
   sendPasswordResetEmail,

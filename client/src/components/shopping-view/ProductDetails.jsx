@@ -151,17 +151,19 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 Out of Stock
               </Button>
             ) : (
-              <Button
-                className="w-full"
-                onClick={() =>
-                  handleAddToCart(
-                    productDetails?._id,
-                    productDetails?.totalStock
-                  )
-                }
-              >
-                Add to Cart
-              </Button>
+              user?.role !== "guest" && (
+                <Button
+                  className="w-full"
+                  onClick={() =>
+                    handleAddToCart(
+                      productDetails?._id,
+                      productDetails?.totalStock
+                    )
+                  }
+                >
+                  Add to Cart
+                </Button>
+              )
             )}
           </div>
           <Separator />
@@ -193,27 +195,29 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 <h1>No Reviews</h1>
               )}
             </div>
-            <div className="mt-10 flex-col flex gap-2">
-              <Label>Write a review</Label>
-              <div className="flex gap-1">
-                <StarRatingComponent
-                  rating={rating}
-                  handleRatingChange={handleRatingChange}
+            {user?.role !== "guest" && (
+              <div className="mt-10 flex-col flex gap-2">
+                <Label>Write a review</Label>
+                <div className="flex gap-1">
+                  <StarRatingComponent
+                    rating={rating}
+                    handleRatingChange={handleRatingChange}
+                  />
+                </div>
+                <Input
+                  name="reviewMsg"
+                  value={reviewMsg}
+                  onChange={(event) => setReviewMsg(event.target.value)}
+                  placeholder="Write a review..."
                 />
+                <Button
+                  onClick={handleAddReview}
+                  disabled={reviewMsg.trim() === ""}
+                >
+                  Submit
+                </Button>
               </div>
-              <Input
-                name="reviewMsg"
-                value={reviewMsg}
-                onChange={(event) => setReviewMsg(event.target.value)}
-                placeholder="Write a review..."
-              />
-              <Button
-                onClick={handleAddReview}
-                disabled={reviewMsg.trim() === ""}
-              >
-                Submit
-              </Button>
-            </div>
+            )}
           </div>
         </div>
       </DialogContent>

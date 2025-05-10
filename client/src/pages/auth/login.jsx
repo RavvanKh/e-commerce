@@ -15,7 +15,6 @@ function AuthLogin() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const { toast } = useToast();
-
   const navigate = useNavigate();
 
   function onSubmit(event) {
@@ -37,7 +36,6 @@ function AuthLogin() {
 
   function handleGuestLogin() {
     dispatch(continueAsGuest()).then((data) => {
-
       if (data?.payload?.success) {
         toast({
           title: "Continuing as guest",
@@ -69,6 +67,7 @@ function AuthLogin() {
           </Link>
         </p>
       </div>
+
       <CommonForm
         formControls={loginFormControls}
         buttonText={"Sign In"}
@@ -76,6 +75,16 @@ function AuthLogin() {
         setFormData={setFormData}
         onSubmit={onSubmit}
       />
+
+      <div className="text-right text-sm">
+        <Link
+          to="/auth/forgot-password"
+          className="text-primary hover:underline"
+        >
+          Forgot Password?
+        </Link>
+      </div>
+
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
