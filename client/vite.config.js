@@ -10,4 +10,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: "dist", // Vercel'in otomatik tanıdığı klasör
+    sourcemap: true, // Production'da hata ayıklama
+  },
+  base: "/", // Vercel'de root domain için
 });
