@@ -69,7 +69,7 @@ export const loginUser = createAsyncThunk(
 
   async (formData) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      "https://e-commerce-api-red.vercel.app/api/auth/login",
       formData,
       {
         withCredentials: true,
@@ -124,7 +124,7 @@ export const checkAuth = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "http://localhost:5000/api/auth/check-auth",
+      "https://e-commerce-api-red.vercel.app/api/auth/check-auth",
       {
         withCredentials: true,
         headers: {
