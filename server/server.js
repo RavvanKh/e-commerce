@@ -34,7 +34,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: ["https://e-commerce-sandy-psi-61.vercel.app"],
+    origin: ["https://e-commerce-sandy-psi-61.vercel.app","http://localhost:5173"],
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -46,6 +46,10 @@ app.use(
     credentials: true,
   })
 );
+
+app.get('/',(req,res) =>{
+  res.json("HELLO")
+})
 
 app.use(cookieParser());
 app.use(express.json());

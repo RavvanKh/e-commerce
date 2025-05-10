@@ -69,7 +69,7 @@ export const loginUser = createAsyncThunk(
 
   async (formData) => {
     const response = await axios.post(
-      "https://e-commerce-api-red.vercel.app/api/auth/login",
+      "https://e-commerce-sandy-psi-61.vercel.app/api/auth/login",
       formData,
       {
         withCredentials: true,
@@ -124,7 +124,7 @@ export const checkAuth = createAsyncThunk(
 
   async () => {
     const response = await axios.get(
-      "https://e-commerce-api-red.vercel.app/api/auth/check-auth",
+      "https://e-commerce-sandy-psi-61.vercel.app/api/auth/check-auth",
       {
         withCredentials: true,
         headers: {
